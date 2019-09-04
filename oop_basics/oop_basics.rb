@@ -45,7 +45,7 @@ class Route
 end
 
 class Train
-  attr_reader :cars_number, :speed, :current_station, :next_station, :prev_station
+  attr_reader :cars_number, :speed, :current_station, :next_station, :prev_station, :type
 
   def initialize(number, type, cars_number)
     @number = number
@@ -72,18 +72,27 @@ class Train
   end
 
   def detach_car
-    unless self.speed > 0 && self.cars_number == 0
+    unless self.speed > 0 || self.cars_number == 0
       @cars_number -= 1
     end
   end
 
   def get_new_position(direction)
-    stations = [@route.start_station]+@route.interim_stations+[@route.end_station])
+    stations = [@route.start_station]+@route.interim_stations+[@route.end_station]
     current_index = stations.index(self.current_station)
     new_index = current_index+direction
+    if new_index < 0 || new_index >= stations.size
+      return self.prev_station, self.current_station, self.next_station
+    end
     prev_station = stations[current_index]
     current_station = stations[new_index]
-    next_station = stations[new_index+1] if direction>0 else stations[new_index-1] 
+    if direction > 0
+      next_station= stations[new_index+1] 
+    elsif new_index-1 > 0 
+      next_station = stations[new_index-1]
+    else
+      next_station = nil
+    end
     return prev_station, current_station, next_station
   end
 
@@ -105,10 +114,4 @@ class Train
       @prev_station, @current_station, @next_station = get_new_position(-1)
     end
   end
-
-
-
-
-
-
-
+end
