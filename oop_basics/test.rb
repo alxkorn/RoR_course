@@ -1,4 +1,6 @@
-load "oop_basics.rb"
+load "station.rb"
+load "train.rb"
+load "route.rb"
 
 puts "Create train"
 t1 = Train.new("train1", 'пассажирский', 6)
@@ -16,7 +18,7 @@ puts t1.inspect
 puts "\n"
 
 puts "Stop"
-t1.stop
+t1.decelerate(10)
 puts t1.inspect
 puts "\n"
 
@@ -86,6 +88,7 @@ puts "\n"
 
 puts "Remove interim station"
 r1.remove_station(st4)
+r1.remove_station(st5)
 puts r1.show_stations
 puts "\n"
 
@@ -100,6 +103,7 @@ puts "Previous station: #{t1.prev_station}"
 puts "Current station: #{t1.current_station.name}"
 puts "Next station: #{t1.next_station.name}"
 puts "\n"
+
 puts "Try to move backwards"
 t1.move_backwards
 puts "Previous station: #{t1.prev_station}"
@@ -128,16 +132,3 @@ puts "Current station: #{t1.current_station.name}"
 puts "Next station: #{t1.next_station}"
 
 puts "\n"
-
-puts "Move backwards 4 times"
-for i in 0..3
-  t1.move_backwards
-  puts "Previous station: #{t1.prev_station.name}"
-  puts "Current station: #{t1.current_station.name}"
-  if t1.next_station != nil
-    puts "Next station: #{t1.next_station.name}"
-  else
-    puts "Next station: #{t1.next_station}"
-  end
-  puts "\n"
-end
