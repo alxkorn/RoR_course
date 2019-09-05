@@ -5,11 +5,11 @@ class Route
   end
 
   def start_station
-    return @stations[0]
+    @stations[0]
   end
 
   def end_station
-    return @stations[-1]
+    @stations[-1]
   end
   
   def add_station(station)
