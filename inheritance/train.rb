@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Train
-  attr_reader :speed
+  attr_reader :speed, :number
 
   def initialize(number)
     @number = number
