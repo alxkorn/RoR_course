@@ -66,6 +66,8 @@ class Train
   end
 
   def move_forward
+    return if @current_station_index.nil?
+
     shift = @current_station_index + 1
     return unless !@current_station_index.nil? && (shift < @route.stations.size)
 
@@ -73,7 +75,9 @@ class Train
   end
 
   def move_backwards
-    shift = current_station_index - 1
+    return if @current_station_index.nil?
+
+    shift = @current_station_index - 1
     return unless !@current_station_index.nil? && (shift >= 0)
 
     move(-1)

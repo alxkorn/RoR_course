@@ -1,5 +1,5 @@
 class Car
-  attr_reader :name
+  attr_reader :name, :train
   def initialize(name)
     @name = name
   end

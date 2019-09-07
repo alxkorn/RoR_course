@@ -29,6 +29,6 @@ class Route
   end
 
   def name
-    @start_station.name + ' -> ' + @end_station.name
+    @stations[0].name + ' -> ' + @stations[-1].name
   end
 end
