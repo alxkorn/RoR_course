@@ -19,6 +19,6 @@ class Car
   def train_number
     return if @train.nil?
 
-    @train.train.number
+    @train.number
   end
 end

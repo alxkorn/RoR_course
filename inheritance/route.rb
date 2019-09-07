@@ -27,4 +27,8 @@ class Route
   def show_stations
     @stations.each { |station| puts station.name }
   end
+
+  def name
+    @start_station.name + ' -> ' + @end_station.name
+  end
 end

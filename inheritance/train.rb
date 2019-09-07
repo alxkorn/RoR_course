@@ -1,12 +1,16 @@
 # frozen_string_literal: true
 
 class Train
-  attr_reader :speed, :number
+  attr_reader :speed, :number, :cars
 
   def initialize(number)
     @number = number
     @speed = 0
     @cars = []
+  end
+
+  def name
+    number
   end
 
   def accelerate(speed_change)
@@ -24,17 +28,23 @@ class Train
   end
 
   def cars_number
-    return unless car.is_a? Car
-
     @cars.size
+  end
+
+  def show_cars
+    @cars.each do |car|
+      puts 'Номер вагона ', car.name
+    end
   end
 
   def attach_car(car)
     @cars << car
+    car.accept_train(self)
   end
 
   def detach_car(car)
     @cars.delete(car) unless speed.positive? || cars_number.zero?
+    car.detach_train
   end
 
   def current_station
