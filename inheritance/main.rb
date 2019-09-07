@@ -18,6 +18,4 @@ require_relative 'train/passenger_train'
 require_relative 'station/station'
 
 railroad = RailRoad.new
-while railroad.state != railroad.exit_state do
-  railroad.main_menu
-end
+railroad.main_menu while railroad.state != railroad.exit_state
