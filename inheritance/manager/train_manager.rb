@@ -101,6 +101,7 @@ class TrainManager < Manager
 
   attr_reader :railroad, :train_types, :car_types
 
+  # методы призванные декомпозировать и упростить код интерфейса, доступ к ним - только через меню
   def move_forward(train)
     train.move_forward
   end

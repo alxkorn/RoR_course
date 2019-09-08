@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Manager
+  protected
+
+  # Это вспомогательные методы для реализации меню, поскольку доступ к функционалу осуществляется через меню, прямой доступ к этим функциям не нужен
   def choose_option(options, args = nil)
     puts 'Выберите действие'
     options.each do |key, value|

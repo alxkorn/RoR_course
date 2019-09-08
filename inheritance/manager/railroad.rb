@@ -28,6 +28,7 @@ class RailRoad < Manager
 
   protected
 
+  # Выход осуществляется через интерфейс, прямой доступ не нужен
   def set_exit_state
     @state = EXIT_STATE
   end
