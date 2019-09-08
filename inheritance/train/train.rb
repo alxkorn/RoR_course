@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Train
-  attr_reader :speed, :number, :cars
+  attr_reader :speed, :number, :cars, :route
 
   def initialize(number)
     @number = number
@@ -63,6 +63,10 @@ class Train
     @route = route
     @current_station_index = 0
     current_station.accept_train(self)
+  end
+
+  def show_route
+    route.name
   end
 
   def move_forward

@@ -18,7 +18,8 @@ class TrainManager < Manager
                 '4' => [method(:manage_car), 'Добавить/отцепить вагон'],
                 '5' => [method(:show_train_cars), 'Просмотреть список вагонов поезда'],
                 '6' => [method(:show_cars), 'Просмотреть список всех вагонов'],
-                '7' => [railroad.method(:main_menu), 'В меню'] }
+                '7' => [method(:train_info), 'Информация о поезде'],
+                '8' => [railroad.method(:main_menu), 'В меню'] }
     choose_option(options)
   end
 
@@ -34,6 +35,22 @@ class TrainManager < Manager
     number = gets.chomp
     trains << type.new(number)
   end
+
+  def train_info
+    train = choose_object(trains, 'поезд')
+    return if train.nil?
+
+    puts ['Номер поезда: ', train.name, 'Тип поезда: ', train.type].join(' ')
+    train.show_cars unless train.cars.empty?
+    unless train.route.nil? then
+      train.show_route 
+      puts ['Текущая станция: ', train.current_station.name].join() 
+      puts ['Следующая станция: ', train.next_station.name].join() unless train.next_station.nil?
+      puts ['Предыдущая станция: ', train.prev_station.name].join() unless train.prev_station.nil?
+    end
+  end
+
+        
 
   def add_car
     puts 'Выберите тип вагона: '
