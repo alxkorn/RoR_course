@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Train
+  include Producer
   attr_reader :speed, :number, :cars, :route
 
   def initialize(number)
