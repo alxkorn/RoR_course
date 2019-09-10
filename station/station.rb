@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Station
+  include InstanceCounter
+  self.count = 0
   attr_reader :trains, :name
   @@stations = []
 
@@ -14,6 +16,7 @@ class Station
     @name = name
     @trains = []
     @@stations << self
+    register_instance
   end
 
   def accept_train(train)

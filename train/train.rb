@@ -2,6 +2,8 @@
 
 class Train
   include Producer
+  include InstanceCounter
+  self.count = 0
   attr_reader :speed, :number, :cars, :route
   @@trains = []
 
@@ -16,6 +18,7 @@ class Train
     @speed = 0
     @cars = []
     @@trains << self
+    register_instance
   end
 
   def name
