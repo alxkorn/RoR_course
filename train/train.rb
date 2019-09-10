@@ -3,11 +3,19 @@
 class Train
   include Producer
   attr_reader :speed, :number, :cars, :route
+  @@trains = []
+
+  class << self
+    def find(number)
+      @@trains.find { |train| train.number == number }
+    end
+  end
 
   def initialize(number)
     @number = number
     @speed = 0
     @cars = []
+    @@trains << self
   end
 
   def name
