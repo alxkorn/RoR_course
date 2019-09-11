@@ -2,7 +2,7 @@
 
 class Station
   include InstanceCounter
-  self.count = 0
+  
   attr_reader :trains, :name
   @@stations = []
 

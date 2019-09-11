@@ -2,7 +2,7 @@
 
 class CargoTrain < Train
   attr_reader :type
-  self.count = 0
+  
   def initialize(number)
     @type = 'грузовой'
     super
