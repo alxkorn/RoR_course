@@ -1,12 +1,24 @@
 # frozen_string_literal: true
 
 class Train
+  include Producer
+  include InstanceCounter
+  
   attr_reader :speed, :number, :cars, :route
+  @@trains = {}
+
+  class << self
+    def find(number)
+      @@trains[number]
+    end
+  end
 
   def initialize(number)
     @number = number
     @speed = 0
     @cars = []
+    @@trains[@number] = self
+    register_instance
   end
 
   def name

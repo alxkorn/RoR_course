@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require_relative 'modules/producer'
+require_relative 'modules/instance_counter'
 
 require_relative 'manager/manager'
 require_relative 'manager/train_manager'

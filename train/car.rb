@@ -1,4 +1,5 @@
 class Car
+  include Producer
   attr_reader :name, :train
   def initialize(name)
     @name = name
