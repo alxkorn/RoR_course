@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require_relative 'exceptions/invalid_name_error'
+
 require_relative 'modules/producer'
 require_relative 'modules/instance_counter'
 
