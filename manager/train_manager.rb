@@ -6,8 +6,8 @@ class TrainManager < Manager
     @trains = []
     @cars = []
     @railroad = railroad
-    @train_types = { '1' => PassengerTrain, '2' => CargoTrain }
-    @car_types = { '1' => PassengerCar, '2' => CargoCar }
+    @train_types = [PassengerTrain, CargoTrain]
+    @car_types = [PassengerCar, CargoCar]
   end
 
   def train_operations
@@ -23,8 +23,10 @@ class TrainManager < Manager
   end
 
   def add_train
-    puts "Выберите тип поезда: \n1 - пассажирский \n2 - грузовой"
-    type = train_types[gets.chomp]
+    # puts "Выберите тип поезда: \n1 - пассажирский \n2 - грузовой"
+    type = choose_object(train_types, 'тип поезда') do |object, index| 
+      puts [index.to_s, '-', object.type].join(' ')
+    end
     return if type.nil?
 
     attempt = 0
@@ -43,7 +45,7 @@ class TrainManager < Manager
     train = choose_object(trains, 'поезд')
     return if train.nil?
 
-    puts ['Номер поезда: ', train.name, 'Тип поезда: ', train.type].join(' ')
+    puts ['Номер поезда: ', train.name, 'Тип поезда: ', train.class.type].join(' ')
     train.show_cars unless train.cars.empty?
     unless train.route.nil?
       train.show_route
@@ -54,16 +56,18 @@ class TrainManager < Manager
   end
 
   def add_car
-    puts 'Выберите тип вагона: '
-    puts '1 - пассажирский'
-    puts '2 - грузовой'
-    type = car_types[gets.chomp]
-
+    # puts 'Выберите тип вагона: '
+    # puts '1 - пассажирский'
+    # puts '2 - грузовой'
+    # type = car_types[gets.chomp]
+    type = choose_object(car_types, 'тип вагона') do |object, index|
+      puts [index.to_s, '-', object.type].join(' ')
+    end
     return if type.nil?
 
-    puts 'Введите номер вагона: '
-    number = gets.chomp
-    cars << type.new(number)
+    # puts 'Введите номер вагона: '
+    # number = gets.chomp
+    cars << type.new(*collect_input_params(type.input_params))
   end
 
   def move_train

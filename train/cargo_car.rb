@@ -1,10 +1,10 @@
 class CargoCar < Car
-  attr_reader :type, :total_volume, :volume_taken
+  attr_reader  :total_volume, :volume_taken
+  @@type = 'грузовой'
   def initialize(name, total_volume)
-    @type = 'грузовой'
     @total_volume = total_volume
     @volume_taken = 0.0
-    super
+    super(name)
   end
 
   def take_volume(vol)
@@ -13,6 +13,16 @@ class CargoCar < Car
 
   def free_volume
     total_volume - volume_taken
+  end
+
+  class << self
+    def input_params
+      [['Номер вагона', :to_s], ['Объем', :to_f]]
+    end
+    
+    def type
+      @@type
+    end
   end
 
   private

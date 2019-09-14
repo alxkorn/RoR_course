@@ -1,18 +1,28 @@
 class PassengerCar < Car
-  attr_reader :type, :num_seats, :seats_taken
+  attr_reader :num_seats, :seats_taken
+  @@type = 'пассажирский'
   def initialize(name, num_seats)
     @num_seats = num_seats
     @seats_taken = 0
-    @type = 'пассажирский'
-    super
+    super(name)
   end
-
+  
   def take_seat
     self.seats_taken += 1 if seats_taken + 1 <= num_seats
   end
 
   def free_seats
     num_seats - seats_taken
+  end
+
+  class << self
+    def input_params
+      [['Номер вагона', :to_s], ['Количество мест', :to_i]]
+    end
+
+    def type
+      @@type
+    end
   end
 
   private

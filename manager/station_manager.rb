@@ -31,7 +31,7 @@ class StationManager < Manager
     return if station.trains.nil?
 
     station.trains.each do |train|
-      puts 'Номер поезда: ', train.number, 'Тип поезда: ', train.type, "\n"
+      puts 'Номер поезда: ', train.number, 'Тип поезда: ', train.class.type, "\n"
     end
   end
 

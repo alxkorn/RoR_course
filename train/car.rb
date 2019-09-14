@@ -38,6 +38,6 @@ class Car
   protected
 
   def validate!
-    raise InvalidNameError, 'Impermissible number format' if number !~ NUMBER_TEMPLATE
+    raise InvalidNameError, 'Impermissible number format' if name !~ NUMBER_TEMPLATE
   end
 end
