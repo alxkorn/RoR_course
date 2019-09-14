@@ -17,13 +17,12 @@ class TrainManager < Manager
                 '4' => [method(:manage_car), 'Добавить/отцепить вагон'],
                 '5' => [method(:show_train_cars), 'Просмотреть список вагонов поезда'],
                 '6' => [method(:show_cars), 'Просмотреть список всех вагонов'],
-                '7' => [method(:train_info), 'Информация о поезде'],
+                '7' => [method(:train_cars_info), 'Информация о вагонах поезда'],
                 '8' => [railroad.method(:main_menu), 'В меню'] }
     choose_option(options)
   end
 
   def add_train
-    # puts "Выберите тип поезда: \n1 - пассажирский \n2 - грузовой"
     type = choose_object(train_types, 'тип поезда') do |object, index| 
       puts [index.to_s, '-', object.type].join(' ')
     end
@@ -41,32 +40,43 @@ class TrainManager < Manager
     end
   end
 
-  def train_info
+  def train_cars_info
     train = choose_object(trains, 'поезд')
     return if train.nil?
 
-    puts ['Номер поезда: ', train.name, 'Тип поезда: ', train.type].join(' ')
-    train.show_cars unless train.cars.empty?
-    unless train.route.nil?
-      train.show_route
-      puts ['Текущая станция: ', train.current_station.name].join
-      puts ['Следующая станция: ', train.next_station.name].join unless train.next_station.nil?
-      puts ['Предыдущая станция: ', train.prev_station.name].join unless train.prev_station.nil?
+    train.parse_cars do |car|
+      puts "Номер вагона: #{car.name}"
+      puts "Тип вагона: #{car.type}"
+      if car.is_a? PassengerCar
+        puts "Свободных мест: #{car.free_seats}"
+        puts "Занятых мест: #{car.seats_taken}"
+      elsif car.is_a? CargoCar
+        puts "Свободный объем: #{car.free_volume}"
+        puts "Занятый объем: #{car.volume_taken}"
+      end
     end
   end
 
+  # def train_info
+  #   train = choose_object(trains, 'поезд')
+  #   return if train.nil?
+
+  #   puts ['Номер поезда: ', train.name, 'Тип поезда: ', train.type].join(' ')
+  #   train.show_cars unless train.cars.empty?
+  #   unless train.route.nil?
+  #     train.show_route
+  #     puts ['Текущая станция: ', train.current_station.name].join
+  #     puts ['Следующая станция: ', train.next_station.name].join unless train.next_station.nil?
+  #     puts ['Предыдущая станция: ', train.prev_station.name].join unless train.prev_station.nil?
+  #   end
+  # end
+
   def add_car
-    # puts 'Выберите тип вагона: '
-    # puts '1 - пассажирский'
-    # puts '2 - грузовой'
-    # type = car_types[gets.chomp]
     type = choose_object(car_types, 'тип вагона') do |object, index|
       puts [index.to_s, '-', object.type].join(' ')
     end
     return if type.nil?
 
-    # puts 'Введите номер вагона: '
-    # number = gets.chomp
     cars << type.new(*collect_input_params(type.input_params))
   end
 
