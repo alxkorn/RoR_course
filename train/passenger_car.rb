@@ -1,6 +1,6 @@
 class PassengerCar < Car
   attr_reader :num_seats, :seats_taken
-  @@type = 'пассажирский'
+  @type = 'пассажирский'
   def initialize(name, num_seats)
     @num_seats = num_seats
     @seats_taken = 0
@@ -20,9 +20,7 @@ class PassengerCar < Car
       [['Номер вагона', :to_s], ['Количество мест', :to_i]]
     end
 
-    def type
-      @@type
-    end
+    attr_reader :type
   end
 
   private

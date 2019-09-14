@@ -16,6 +16,10 @@ class Car
     @train = train
   end
 
+  def type
+    self.class.type
+  end
+
   def detach_train
     return if @train.nil?
 

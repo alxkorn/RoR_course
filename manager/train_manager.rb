@@ -45,7 +45,7 @@ class TrainManager < Manager
     train = choose_object(trains, 'поезд')
     return if train.nil?
 
-    puts ['Номер поезда: ', train.name, 'Тип поезда: ', train.class.type].join(' ')
+    puts ['Номер поезда: ', train.name, 'Тип поезда: ', train.type].join(' ')
     train.show_cars unless train.cars.empty?
     unless train.route.nil?
       train.show_route
