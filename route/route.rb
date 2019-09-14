@@ -2,10 +2,11 @@
 
 class Route
   include InstanceCounter
-  
+
   attr_reader :stations
   def initialize(start_station, end_station)
     @stations = [start_station, end_station]
+    validate!
     register_instance
   end
 
@@ -18,7 +19,7 @@ class Route
   end
 
   def add_station(station)
-    @stations.insert(-2, station)
+    @stations.insert(-2, station) unless stations.include? station
   end
 
   def remove_station(station)
@@ -33,5 +34,18 @@ class Route
 
   def name
     @stations[0].name + ' -> ' + @stations[-1].name
+  end
+
+  def validate?
+    validate!
+    true
+  rescue InvalidNameError
+    false
+  end
+
+  protected
+
+  def validate!
+    raise InvalidNameError, 'Start and End stations must be different' if stations[0].name == stations[-1].name
   end
 end

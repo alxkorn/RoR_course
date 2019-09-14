@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 class TrainManager < Manager
-  attr_reader :trains
-  attr_reader :cars
+  attr_reader :trains, :cars
   def initialize(railroad)
     @trains = []
     @cars = []
     @railroad = railroad
     @train_types = { '1' => PassengerTrain, '2' => CargoTrain }
-    @car_types = {'1' => PassengerCar, '2' => CargoCar}
+    @car_types = { '1' => PassengerCar, '2' => CargoCar }
   end
 
   def train_operations
@@ -24,16 +23,20 @@ class TrainManager < Manager
   end
 
   def add_train
-    puts 'Выберите тип поезда: '
-    puts '1 - пассажирский'
-    puts '2 - грузовой'
+    puts "Выберите тип поезда: \n1 - пассажирский \n2 - грузовой"
     type = train_types[gets.chomp]
-
     return if type.nil?
 
-    puts 'Введите номер поезда: '
-    number = gets.chomp
-    trains << type.new(number)
+    attempt = 0
+    begin
+      puts 'Введите номер поезда: '
+      number = gets.chomp
+      trains << type.new(number)
+    rescue InvalidNameError => e
+      attempt += 1
+      puts e.message
+      retry if attempt < 3
+    end
   end
 
   def train_info
@@ -42,15 +45,13 @@ class TrainManager < Manager
 
     puts ['Номер поезда: ', train.name, 'Тип поезда: ', train.type].join(' ')
     train.show_cars unless train.cars.empty?
-    unless train.route.nil? then
-      train.show_route 
-      puts ['Текущая станция: ', train.current_station.name].join() 
-      puts ['Следующая станция: ', train.next_station.name].join() unless train.next_station.nil?
-      puts ['Предыдущая станция: ', train.prev_station.name].join() unless train.prev_station.nil?
+    unless train.route.nil?
+      train.show_route
+      puts ['Текущая станция: ', train.current_station.name].join
+      puts ['Следующая станция: ', train.next_station.name].join unless train.next_station.nil?
+      puts ['Предыдущая станция: ', train.prev_station.name].join unless train.prev_station.nil?
     end
   end
-
-        
 
   def add_car
     puts 'Выберите тип вагона: '
@@ -100,7 +101,6 @@ class TrainManager < Manager
   protected
 
   attr_reader :railroad, :train_types, :car_types
-
   # методы призванные декомпозировать и упростить код интерфейса, доступ к ним - только через меню
   def move_forward(train)
     train.move_forward
