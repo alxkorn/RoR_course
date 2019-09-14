@@ -15,6 +15,12 @@ class Station
     register_instance
   end
 
+  def parse_trains
+    return unless block_given?
+
+    trains.each { |train| yield(train) }
+  end
+
   class << self
     def all
       @@stations

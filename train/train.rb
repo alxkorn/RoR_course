@@ -17,6 +17,12 @@ class Train
     register_instance
   end
 
+  def parse_cars
+    return unless block_given?
+
+    cars.each { |car| yield(car) }
+  end
+
   class << self
     def find(number)
       @@trains[number]
