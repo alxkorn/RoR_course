@@ -48,11 +48,11 @@ class TrainManager < Manager
       puts "Номер вагона: #{car.name}"
       puts "Тип вагона: #{car.type}"
       if car.is_a? PassengerCar
-        puts "Свободных мест: #{car.free_seats}"
-        puts "Занятых мест: #{car.seats_taken}"
+        puts "Свободных мест: #{car.free_space}"
+        puts "Занятых мест: #{car.space_taken}"
       elsif car.is_a? CargoCar
-        puts "Свободный объем: #{car.free_volume}"
-        puts "Занятый объем: #{car.volume_taken}"
+        puts "Свободный объем: #{car.free_space}"
+        puts "Занятый объем: #{car.space_taken}"
       end
     end
   end
