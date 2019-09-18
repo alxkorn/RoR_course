@@ -30,8 +30,9 @@ class StationManager < Manager
     station = choose_object(stations, 'станцию')
     return if station.trains.nil?
 
-    station.trains.each do |train|
+    station.parse_trains do |train|
       puts 'Номер поезда: ', train.number, 'Тип поезда: ', train.type, "\n"
+      puts "Количество вагонов #{train.cars_number}"
     end
   end
 

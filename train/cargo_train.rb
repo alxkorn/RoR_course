@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 class CargoTrain < Train
-  attr_reader :type
-  
-  def initialize(number)
-    @type = 'грузовой'
-    super
+  @type = 'грузовой'
+
+  class << self
+    attr_reader :type
   end
 
   def attach_car(car)
