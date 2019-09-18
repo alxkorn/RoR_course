@@ -10,4 +10,8 @@ class PassengerCar < Car
 
     attr_reader :type
   end
+
+  def take_space
+    super(1)
+  end
 end
