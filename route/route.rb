@@ -2,10 +2,16 @@
 
 class Route
   include InstanceCounter
+  include Validation
+  validate :start_station, :type, Station
+  validate :end_station, :type, Station
+  validate :stations, :route_start_end_valid
 
   attr_reader :stations
   def initialize(start_station, end_station)
-    @stations = [start_station, end_station]
+    @start_station = start_station
+    @end_station = end_station
+    @stations = [@start_station, @end_station]
     validate!
     register_instance
   end
@@ -36,16 +42,9 @@ class Route
     @stations[0].name + ' -> ' + @stations[-1].name
   end
 
-  def validate?
-    validate!
-    true
-  rescue InvalidNameError
-    false
-  end
-
   protected
 
-  def validate!
-    raise InvalidNameError, 'Start and End stations must be different' if stations[0].name == stations[-1].name
+  def route_start_end_valid(*args)
+    raise InvalidFormatError, 'Start and End stations must be different' if stations[0].name == stations[-1].name
   end
 end

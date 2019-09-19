@@ -17,9 +17,16 @@ class StationManager < Manager
   end
 
   def add_station
-    puts 'Введите название станции: '
-    name = gets.chomp
-    stations << Station.new(name)
+    attempt = 0
+    begin
+      puts 'Введите название станции: '
+      name = gets.chomp
+      stations << Station.new(name)
+    rescue InvalidFormatError => e
+      attempt += 1
+      puts e.message
+      retry if attempt < 3
+    end
   end
 
   def show_stations_list

@@ -2,9 +2,12 @@
 
 class Car
   include Producer
+  include Validation
   attr_reader :name, :train, :space_taken, :total_space
   NUMBER_TEMPLATE = /\d{5}-?[a-zа-я]{2}/i.freeze
-
+  validate :name, :format, NUMBER_TEMPLATE
+  validate :total_space, :type, Numeric
+  
   def initialize(name, total_space)
     @name = name
     @total_space = total_space
@@ -42,18 +45,7 @@ class Car
     @train.number
   end
 
-  def validate?
-    validate!
-    true
-  rescue InvalidNameError
-    false
-  end
-
   protected
 
   attr_writer :space_taken
-
-  def validate!
-    raise InvalidNameError, 'Impermissible number format' if name !~ NUMBER_TEMPLATE
-  end
 end

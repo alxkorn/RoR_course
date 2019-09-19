@@ -3,10 +3,11 @@
 class Train
   include Producer
   include InstanceCounter
-
+  include Validation
   attr_reader :speed, :number, :cars, :route
   @@trains = {}
   NUMBER_TEMPLATE = /[a-z0-9]{3}-?[a-z0-9]{2}/i.freeze
+  validate :number, :format, NUMBER_TEMPLATE
 
   def initialize(number)
     @number = number
@@ -113,22 +114,11 @@ class Train
     move(-1)
   end
 
-  def validate?
-    validate!
-    true
-  rescue InvalidNameError
-    false
-  end
-
   protected
 
   # этот метод помещен в protected, тк не хотим, чтобы имелся непосредственный доступ к скорости извне.
   # Однако внутри самого класса и внутри классов-потомков скорость изменятеся
   attr_writer :speed
-
-  def validate!
-    raise InvalidNameError, 'Impermissible number format' if number !~ NUMBER_TEMPLATE
-  end
 
   # эти методы помещены в protected, поскольку призваны лишь бороться с дублированием кода, они не должны вызыватьбся извне.
   def move(direction)
