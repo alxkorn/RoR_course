@@ -2,10 +2,13 @@
 
 class Station
   include InstanceCounter
+  include Validation
+  NAME_TEMPLATE = /^[a-zа-я]{3,}+(?:[\s-][a-zа-я]+)*(?:[\s-]\d)*$/i.freeze
+  validate :name, :type, String
+  validate :name, :format, NAME_TEMPLATE
 
   attr_reader :trains, :name
   @@stations = []
-  NAME_TEMPLATE = /^[a-zа-я]{3,}+(?:[\s-][a-zа-я]+)*(?:[\s-]\d)*$/i.freeze
 
   def initialize(name)
     @name = name
@@ -37,18 +40,5 @@ class Station
 
   def depart_train(train)
     @trains.delete(train)
-  end
-
-  def validate?
-    validate!
-    true
-  rescue InvalidNameError
-    false
-  end
-
-  protected
-
-  def validate!
-    raise InvalidNameError, 'Impermissible name format' if name !~ NAME_TEMPLATE
   end
 end

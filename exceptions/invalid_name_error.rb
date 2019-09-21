@@ -1,2 +1,0 @@
-class InvalidNameError < StandardError
-end

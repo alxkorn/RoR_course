@@ -1,0 +1,2 @@
+class PresenceError < StandardError
+end

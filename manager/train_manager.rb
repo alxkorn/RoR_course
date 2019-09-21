@@ -33,7 +33,7 @@ class TrainManager < Manager
       puts 'Введите номер поезда: '
       number = gets.chomp
       trains << type.new(number)
-    rescue InvalidNameError => e
+    rescue InvalidFormatError => e
       attempt += 1
       puts e.message
       retry if attempt < 3
@@ -76,8 +76,14 @@ class TrainManager < Manager
       puts [index.to_s, '-', object.type].join(' ')
     end
     return if type.nil?
-
-    cars << type.new(*collect_input_params(type.input_params))
+    attempt = 0
+    begin
+      cars << type.new(*collect_input_params(type.input_params))
+    rescue InvalidFormatError => e
+      attempt += 1
+      puts e.message
+      retry if attempt < 3
+    end
   end
 
   def move_train

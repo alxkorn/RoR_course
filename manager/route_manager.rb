@@ -17,12 +17,16 @@ class RouteManager < Manager
   end
 
   def add_route
-    start_station = choose_object(railroad.station_manager.stations, 'начальную станцию')
-    end_station = choose_object(railroad.station_manager.stations, 'конечную станцию')
-
-    return if start_station.nil? || end_station.nil?
-
-    routes << Route.new(start_station, end_station)
+    attempt = 0
+    begin
+      start_station = choose_object(railroad.station_manager.stations, 'начальную станцию')
+      end_station = choose_object(railroad.station_manager.stations, 'конечную станцию')
+      routes << Route.new(start_station, end_station)
+    rescue InvalidFormatError => e
+      attempt += 1
+      puts e.message
+      retry if attempt < 3
+    end
   end
 
   def manage_route_stations
@@ -37,10 +41,12 @@ class RouteManager < Manager
     when '1'
       station = choose_object(railroad.station_manager.stations, 'станцию')
       return if station.nil?
+
       route.add_station(station)
     when '2'
       station = choose_object(route.stations, 'станцию')
       return if station.nil?
+
       route.remove_station(station)
     end
   end
@@ -49,6 +55,7 @@ class RouteManager < Manager
     route = choose_object(routes, 'маршрут')
     train = choose_object(railroad.train_manager.trains, 'поезд')
     return if route.nil? || train.nil?
+
     train.accept_route(route)
   end
 
